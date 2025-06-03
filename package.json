@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "back-end/node_modules/.bin/nodemon src/bin/server.js",
-    "start:dev": "src/bin/server.js"
+    "start": "./src/bin/server.js",
+    "start:dev": "nodemon ./src/bin/server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -15,9 +15,9 @@
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
     "jade": "^1.9.2",
+    "joi": "^17.13.3",
     "morgan": "~1.9.1",
+    "nanoid": "^5.1.5",
     "nodemon": "^3.1.10"
-  },
-  "devDependencies": {
   }
 }
