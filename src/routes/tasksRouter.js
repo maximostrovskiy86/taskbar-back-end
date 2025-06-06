@@ -1,12 +1,17 @@
 import express from "express";
+
 const routerApi = express.Router();
-import getTasksController from "../controllers/taskController.js";
+import {
+	addTaskController,
+	getTasksController,
+	deleteTaskController,
+	updateTaskController
+} from "../controllers/taskController.js";
 import {addTaskValidationSchema, updateTaskValidationSchema} from "../middleware/validationMiddleware.js";
 
-routerApi
-	.get('/tasks', getTasksController.getTasks)
-	.post('/tasks', addTaskValidationSchema, getTasksController.addTask)
-	.put('/tasks/:id', updateTaskValidationSchema, getTasksController.updateTask)
-	.delete('/tasks/:id', getTasksController.deleteTask)
+routerApi.get('/', getTasksController)
+routerApi.post('/', addTaskValidationSchema, addTaskController)
+routerApi.put('/:id', updateTaskValidationSchema, updateTaskController)
+routerApi.delete('/:id', deleteTaskController)
 
 export default routerApi;

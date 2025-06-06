@@ -6,10 +6,11 @@ import 'dotenv/config'
 
 const app = express();
 
+
 app.use(express.json());
 app.use(cors());
 app.use(logger('dev'))
-app.use('/api', routerApi);
+app.use('/api/tasks', routerApi);
 
 
 export default app;

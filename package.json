@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "./src/bin/server.js",
-    "start:dev": "nodemon ./src/bin/server.js"
+    "start:dev": "nodemon ./src/bin/server.js",
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint src --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -16,8 +18,14 @@
     "http-errors": "~1.6.3",
     "jade": "^1.9.2",
     "joi": "^17.13.3",
+    "mongoose": "^8.15.1",
     "morgan": "~1.9.1",
     "nanoid": "^5.1.5",
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0"
   }
 }

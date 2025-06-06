@@ -1,27 +1,16 @@
-import {nanoid} from "nanoid";
+import {addTask, getTasks, deleteTaskById, updateTaskById} from "../services/tasksService.js";
 
-let tasks = [
-	{
-		"title": "Samuel Lee",
-		"level": "Hard",
-		"date": "12.06.2025",
-		"id": 1
-	},
-	{
-		"title": "Samuel Lee",
-		"level": "Easy",
-		"category": "Work",
-		"id": 2
-	},
-	{
-		"title": "Pusa",
-		"level": "HARD",
-		"category": "Pick",
-		"id": 3
-	},
-];
-
-const getTasks = (req, res, next) => {
+// let tasks = [
+// 	{
+// 		"title": "Samuel Lee",
+// 		"level": "Hard",
+// 		"date": "12.06.2025",
+// 		"id": 1
+// 	}
+// ]
+export const getTasksController = async (req, res) => {
+	const tasks = await getTasks();
+	console.log("TASKS", tasks);
 	res.json({
 		status: 'success',
 		code: 200,
@@ -29,20 +18,10 @@ const getTasks = (req, res, next) => {
 	});
 }
 
-
-const addTask = (req, res, next) => {
-	const {title, category, complexity, level} = req.body;
-	const task = {
-		id: nanoid(),
-		title,
-		complexity,
-		category,
-		level,
-		done: false
-	};
+export const addTaskController = async (req, res) => {
+	const {title, category, level} = req.body;
 	
-	tasks.push(task);
-	
+	const task = await addTask(title, category, level);
 	res.status(201).json({
 		status: 'success',
 		code: 201,
@@ -50,36 +29,25 @@ const addTask = (req, res, next) => {
 	});
 }
 
-
-const updateTask = (req, res, next) => {
+export const updateTaskController = async (req, res) => {
 	const {id} = req.params;
 	const {title, level, category} = req.body;
-	const [task] = tasks.filter(el => {
-		return +el.id === +id;
-	});
-	
-	task.title = title;
-	task.level = level;
-	task.category = category;
-	task.pipa = 2;
+	const task = await updateTaskById(id, {title, level, category})
 	
 	res.json({
 		status: 'success',
 		code: 200,
-		data: task
+		task,
 	});
 }
 
-const deleteTask = (req, res, next) => {
+export const deleteTaskController = async (req, res) => {
 	const {id} = req.params;
-	const newtasks = tasks.filter(el => +el.id !== +id);
-	tasks = [...newtasks];
-	res.status(204).json();
-}
-
-export default {
-	getTasks,
-	addTask,
-	updateTask,
-	deleteTask,
+	const deletedTask = await deleteTaskById(id);
+	
+	res.status(204).json({
+		status: 'success',
+		code: 204,
+		deletedTask,
+	});
 }
