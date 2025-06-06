@@ -1,16 +1,8 @@
-import {addTask, getTasks, deleteTaskById, updateTaskById} from "../services/tasksService.js";
+import {addTask, getTasks, deleteTaskById, updateTaskById, getTaskById} from "../services/tasksService.js";
 
-// let tasks = [
-// 	{
-// 		"title": "Samuel Lee",
-// 		"level": "Hard",
-// 		"date": "12.06.2025",
-// 		"id": 1
-// 	}
-// ]
 export const getTasksController = async (req, res) => {
 	const tasks = await getTasks();
-	console.log("TASKS", tasks);
+	console.log("getTasksController", getTasksController);
 	res.json({
 		status: 'success',
 		code: 200,
@@ -32,12 +24,11 @@ export const addTaskController = async (req, res) => {
 export const updateTaskController = async (req, res) => {
 	const {id} = req.params;
 	const {title, level, category} = req.body;
-	const task = await updateTaskById(id, {title, level, category})
 	
+	await updateTaskById(id, {title, level, category})
 	res.json({
 		status: 'success',
 		code: 200,
-		task,
 	});
 }
 
@@ -50,4 +41,15 @@ export const deleteTaskController = async (req, res) => {
 		code: 204,
 		deletedTask,
 	});
+}
+
+export const findTaskByIdController = async (req, res) => {
+	const {id} = req.params;
+	const task = await getTaskById(id);
+	
+	res.status(200).json({
+		status: 'success',
+		code: 200,
+		task,
+	})
 }
