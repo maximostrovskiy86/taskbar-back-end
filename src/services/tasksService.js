@@ -21,17 +21,37 @@ export const getTaskById = async (id) => {
 	}
 }
 
-export const addTask = async (title, category, level) => {
-	const task = await Task.create({title, category, level})
+export const addTask = async (body) => {
+	console.log("Body", body);
+	
+	const task = await Task.create({...body})
 	return task;
 };
 
-export const updateTaskById = async (id, {title, level, category}) => {
-	
-	const taskUpdate = await Task.findByIdAndUpdate(id, {title, level, category});
-	if (!taskUpdate) {
+
+// try {
+// 	const result = await taskServices.createTask(userId, req.body);
+// 	res.status(200).json({
+// 		status: "success",
+// 		code: 200,
+// 		data: { task: result },
+// 	});
+// } catch (e) {
+// 	console.error(e);
+// 	next(e);
+// }
+
+export const updateTaskById = async (id, dataUpdate) => {
+	console.log("dataUpdate", dataUpdate)
+	if (!id || !dataUpdate) {
 		throw new WrongParametersError(`Failed to update task with id ${id} not found.`);
 	}
+	
+	const updatedTask =  await Task.findByIdAndUpdate(id, dataUpdate,{
+		new: true,
+	});
+	console.log('updatedTask', updatedTask)
+	return updatedTask;
 };
 
 export const deleteTaskById = async (id) => {

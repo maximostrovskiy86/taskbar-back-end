@@ -8,12 +8,14 @@ import {
 	deleteTaskController,
 	updateTaskController, findTaskByIdController
 } from "../controllers/taskController.js";
-import {addTaskValidationSchema} from "../middleware/validationMiddleware.js";
+// import {addTaskValidationSchema} from "../middleware/validationMiddleware.js";
 
 routerApi.get('/', asyncWrapper(getTasksController))
 routerApi.get('/:id', asyncWrapper(findTaskByIdController))
-routerApi.post('/', addTaskValidationSchema, asyncWrapper(addTaskController))
-routerApi.put('/:id', asyncWrapper(updateTaskController))
+// routerApi.post('/', addTaskValidationSchema, asyncWrapper(addTaskController))
+routerApi.post('/', addTaskController)
+// routerApi.put('/:id', asyncWrapper(updateTaskController))
+routerApi.put('/:id', updateTaskController)
 routerApi.delete('/:id', asyncWrapper(deleteTaskController))
 
 export default routerApi;

@@ -7,29 +7,38 @@ export const getTasksController = async (req, res) => {
 		status: 'success',
 		code: 200,
 		tasks: tasks,
+		// data: tasks,
+		
 	});
 }
 
 export const addTaskController = async (req, res) => {
-	const {title, category, level} = req.body;
+	// const {title, category, level} = req.body;
 	
-	const task = await addTask(title, category, level);
+	const result = await addTask(req.body);
 	res.status(201).json({
-		status: 'success',
-		code: 201,
-		task,
+		status: "success",
+		code: 200,
+		// data: {task: result},
+		task: result,
 	});
 }
 
 export const updateTaskController = async (req, res) => {
 	const {id} = req.params;
-	const {title, level, category} = req.body;
+	const data = req.body;
+	console.log("req.body", req.body, id);
 	
-	await updateTaskById(id, {title, level, category})
+	const updateTask = await updateTaskById(id, data)
 	res.json({
 		status: 'success',
-		code: 200,
+		code: 201,
+		task: updateTask,
+		// data: { contact: updateTask },
+		
 	});
+	
+	console.log("updateTask", updateTask)
 }
 
 export const deleteTaskController = async (req, res) => {
