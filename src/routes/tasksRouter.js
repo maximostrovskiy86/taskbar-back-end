@@ -16,6 +16,7 @@ routerApi.get('/:id', asyncWrapper(findTaskByIdController))
 routerApi.post('/', addTaskController)
 // routerApi.put('/:id', asyncWrapper(updateTaskController))
 routerApi.put('/:id', updateTaskController)
-routerApi.delete('/:id', asyncWrapper(deleteTaskController))
+routerApi.delete('/:id', deleteTaskController)
+// routerApi.delete('/:id', asyncWrapper(deleteTaskController))
 
 export default routerApi;

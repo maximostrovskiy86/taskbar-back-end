@@ -47,7 +47,7 @@ export const updateTaskById = async (id, dataUpdate) => {
 		throw new WrongParametersError(`Failed to update task with id ${id} not found.`);
 	}
 	
-	const updatedTask =  await Task.findByIdAndUpdate(id, dataUpdate,{
+	const updatedTask = await Task.findByIdAndUpdate(id, dataUpdate, {
 		new: true,
 	});
 	console.log('updatedTask', updatedTask)
@@ -55,8 +55,11 @@ export const updateTaskById = async (id, dataUpdate) => {
 };
 
 export const deleteTaskById = async (id) => {
-	const deletedTask = await Task.findByIdAndDelete(id);
-	return deletedTask;
+	console.log("id", id)
+	const deleteTask =  await Task.findByIdAndDelete(id);
+	// console.log('deleteTask', deleteTask)
+	return deleteTask;
+	
 };
 
 // export const updateStatusContact = async (id, favorite) => {

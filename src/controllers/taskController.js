@@ -45,10 +45,20 @@ export const deleteTaskController = async (req, res) => {
 	const {id} = req.params;
 	const deletedTask = await deleteTaskById(id);
 	
-	res.status(204).json({
+	console.log("DELETED task", deletedTask)
+	if (!deletedTask) {
+		console.log("no task", deletedTask);
+		return res.status(404).json({
+			status: "error",
+			code: 404,
+			message: `Not found task with such id: ${id}`,
+		});
+	}
+	
+	res.json({
 		status: 'success',
 		code: 204,
-		deletedTask,
+		task: deletedTask,
 	});
 }
 
