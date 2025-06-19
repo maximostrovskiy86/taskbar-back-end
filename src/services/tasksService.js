@@ -41,7 +41,7 @@ export const addTask = async (body) => {
 // 	next(e);
 // }
 
-export const updateTaskById = async (id, dataUpdate) => {
+export const updateTask = async (id, dataUpdate) => {
 	console.log("dataUpdate", dataUpdate)
 	if (!id || !dataUpdate) {
 		throw new WrongParametersError(`Failed to update task with id ${id} not found.`);
@@ -54,12 +54,25 @@ export const updateTaskById = async (id, dataUpdate) => {
 	return updatedTask;
 };
 
-export const deleteTaskById = async (id) => {
+export const deleteTask = async (id) => {
 	console.log("id", id)
-	const deleteTask =  await Task.findByIdAndDelete(id);
-	// console.log('deleteTask', deleteTask)
+	const deleteTask = await Task.findByIdAndDelete(id);
 	return deleteTask;
 	
+};
+
+export const updateStatusTask = async (taskId, status) => {
+	console.log("updateStatusTask", taskId, status)
+	const result = await Task.findOneAndUpdate(
+		// { _id: taskId, userId },
+		{_id: taskId},
+		{completed: status},
+		{
+			new: true,
+		}
+	);
+	console.log("RESULT", result);
+	return result;
 };
 
 // export const updateStatusContact = async (id, favorite) => {

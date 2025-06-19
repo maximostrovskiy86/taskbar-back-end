@@ -1,7 +1,8 @@
-import {addTask, getTasks, deleteTaskById, updateTaskById, getTaskById} from "../services/tasksService.js";
+import {addTask, getTasks, deleteTask, updateStatusTask, updateTask} from "../services/tasksService.js";
 
 export const getTasksController = async (req, res) => {
 	const tasks = await getTasks();
+	
 	console.log("getTasksController", getTasksController);
 	res.json({
 		status: 'success',
@@ -13,14 +14,13 @@ export const getTasksController = async (req, res) => {
 }
 
 export const addTaskController = async (req, res) => {
-	// const {title, category, level} = req.body;
-	
 	const result = await addTask(req.body);
+	
 	res.status(201).json({
 		status: "success",
 		code: 200,
-		// data: {task: result},
 		task: result,
+		// data: {task: result},
 	});
 }
 
@@ -29,25 +29,21 @@ export const updateTaskController = async (req, res) => {
 	const data = req.body;
 	console.log("req.body", req.body, id);
 	
-	const updateTask = await updateTaskById(id, data)
+	const task = await updateTask(id, data)
 	res.json({
 		status: 'success',
 		code: 201,
-		task: updateTask,
-		// data: { contact: updateTask },
+		task: task,
+		// data: {contact: task},
 		
 	});
-	
-	console.log("updateTask", updateTask)
 }
 
 export const deleteTaskController = async (req, res) => {
 	const {id} = req.params;
-	const deletedTask = await deleteTaskById(id);
+	const deletedTask = await deleteTask(id);
 	
-	console.log("DELETED task", deletedTask)
 	if (!deletedTask) {
-		console.log("no task", deletedTask);
 		return res.status(404).json({
 			status: "error",
 			code: 404,
@@ -62,13 +58,30 @@ export const deleteTaskController = async (req, res) => {
 	});
 }
 
-export const findTaskByIdController = async (req, res) => {
-	const {id} = req.params;
-	const task = await getTaskById(id);
+export const updateStatusTaskController = async (req, res, next) => {
+	const { id } = req.params;
+	const { status } = req.body;
+	// const userId = req.user.id;
 	
-	res.status(200).json({
-		status: 'success',
-		code: 200,
-		task,
-	})
-}
+	try {
+		const resultUpdateStatus = await updateStatusTask(id, status);
+		
+		if (!resultUpdateStatus) {
+			return res.status(404).json({
+				status: "error",
+				code: 404,
+				message: `Not found task id: ${id}`,
+			});
+		}
+		
+		res.json({
+			status: "success",
+			code: 201,
+			task: resultUpdateStatus,
+			
+		});
+	} catch (e) {
+		console.error(e);
+		next(e);
+	}
+};
