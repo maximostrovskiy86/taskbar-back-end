@@ -1,54 +1,22 @@
-import express from "express";
-import logger from "morgan";
-import cors from "cors";
+import app from "../app.js";
+import {connectMongo} from "../db/connection.js";
+import dotenv from 'dotenv';
 
-const port = 8080
+dotenv.config();
 
-const app = express();
+const PORT = process.env.PORT || 3030;
 
-app.use(express.json());
-app.use(cors());
+const start = async () => {
+	try {
+		await connectMongo();
+		
+		app.listen(PORT, (err) => {
+			if (err) console.error('Error at server launch:', err);
+			console.log(`Server works at port ${PORT}!`);
+		});
+	} catch (err) {
+		console.error(`Failed to launch application with error: ${err.message}`);
+	}
+};
 
-
-app.get('/tasks', (req, res) => {
-	res.send({
-		status: "success",
-		code: 200,
-		tasks: [
-			{
-				"title": "Samuel Lee",
-				"level": "Hard",
-				"date": "12.06.2025",
-				"category": "Healthy",
-				"id": 1
-			},
-			{
-				"title": "Samuel Lee",
-				"level": "Easy",
-				"date": "12.06.2025",
-				"category": "Work",
-				"id": 2
-			},
-			{
-				"title": "Samuel Lee",
-				"level": "Middle",
-				"date": "12.06.2025",
-				"category": "Hard",
-				"id": 3
-			},
-			{
-				"title": "Samuel Lee",
-				"level": "Middle",
-				"date": "12.06.2025",
-				"category": "Study",
-				"id": 4
-			},
-		]
-	})
-})
-
-app.listen(port, () => {
-	console.log(`Example app listening on port ${port}`)
-})
-
-
+start();
