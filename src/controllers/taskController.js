@@ -3,7 +3,7 @@ import {addTask, getTasks, deleteTask, updateStatusTask, updateTask} from "../se
 export const getTasksController = async (req, res) => {
 	const tasks = await getTasks();
 	
-	console.log("getTasksController", getTasksController);
+	console.log("reqQQ", req.user);
 	res.json({
 		status: 'success',
 		code: 200,

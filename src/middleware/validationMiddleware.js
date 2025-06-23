@@ -4,13 +4,13 @@ import {ValidationError} from "../helpers/error.js"
 export const addTaskValidationSchema = (req, res, next) => {
 	
 	const schema = Joi.object({
-		// title: Joi.string()
-		// 	.alphanum()
-		// 	.min(3)
-		// 	.max(30)
-		// 	.required(),
-		// level: Joi.string().required(),
-		// category: Joi.string().required(),
+		taskName: Joi.string()
+			.alphanum()
+			.min(3)
+			.max(30)
+			.required(),
+		difficulty: Joi.string().required(),
+		category: Joi.string().required(),
 	});
 	
 	const validationResult = schema.validate(req.body);
