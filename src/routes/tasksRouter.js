@@ -1,6 +1,6 @@
 import express from "express";
 
-const routerApi = express.Router();
+const taskRouter = express.Router();
 import {asyncWrapper} from "../helpers/apiHelpers.js";
 import {
 	addTaskController,
@@ -11,14 +11,14 @@ import {
 } from "../controllers/taskController.js";
 // import {addTaskValidationSchema} from "../middleware/validationMiddleware.js";
 
-routerApi.get('/', asyncWrapper(getTasksController))
-// routerApi.get('/:id', asyncWrapper(findTaskByIdController))
-// routerApi.post('/', addTaskValidationSchema, asyncWrapper(addTaskController))
-routerApi.post('/', addTaskController)
-// routerApi.put('/:id', asyncWrapper(updateTaskController))
-routerApi.put('/:id', updateTaskController)
-routerApi.delete('/:id', deleteTaskController)
-routerApi.patch('/:id/status', updateStatusTaskController)
-// routerApi.delete('/:id', asyncWrapper(deleteTaskController))
+taskRouter.get('/', asyncWrapper(getTasksController))
+// taskRouter.get('/:id', asyncWrapper(findTaskByIdController))
+// taskRouter.post('/', addTaskValidationSchema, asyncWrapper(addTaskController))
+taskRouter.post('/', addTaskController)
+// taskRouter.put('/:id', asyncWrapper(updateTaskController))
+taskRouter.put('/:id', updateTaskController)
+taskRouter.delete('/:id', deleteTaskController)
+taskRouter.patch('/:id/status', updateStatusTaskController)
+// taskRouter.delete('/:id', asyncWrapper(deleteTaskController))
 
-export default routerApi;
+export default taskRouter;
