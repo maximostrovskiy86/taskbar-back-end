@@ -17,7 +17,7 @@ export const login = async (email, password) => {
 	// console.log('LOGIN', email);
 	const user = await User.findOne({email});
 	console.log("USERLOGIN", user);
-	if (!user) {re
+	if (!user) {
 		throw new NotAuthorizedError(`No user with email ${email} found`)
 	}
 	

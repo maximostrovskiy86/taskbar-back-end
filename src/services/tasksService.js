@@ -1,9 +1,50 @@
 import Task from "../db/taskModel.js";
 import {WrongParametersError} from "../helpers/error.js";
 
-export const getTasks = async () => {
-	const tasks = await Task.find();
+export const getTasks = async (userId) => {
+	const tasks = await Task.find({userId});
 	return tasks;
+};
+
+
+export const addTask = async (body, userId) => {
+	const task = await Task.create({...body, userId})
+	return task;
+};
+
+
+export const updateTask = async (taskId, dataUpdate, userId) => {
+	if (!taskId || !dataUpdate) {
+		throw new WrongParametersError(`Failed to update task with id ${taskId} not found.`);
+	}
+	
+	const resultUpdatedTask = await Task.findOneAndUpdate(
+		{_id: taskId, userId},
+		{...dataUpdate},
+		{new: true}
+	);
+	console.log('updatedTask', resultUpdatedTask)
+	return resultUpdatedTask;
+};
+
+export const deleteTask = async (taskId, userId) => {
+	console.log("idDEL", taskId, userId)
+	const deleteTask = await Task.findOneAndDelete({_id: taskId, userId});
+	return deleteTask;
+	
+};
+
+export const updateStatusTask = async (taskId, userId, status) => {
+	console.log("updateStatusTask", taskId, status)
+	const result = await Task.findOneAndUpdate(
+		{ _id: taskId, userId },
+		{completed: status},
+		{
+			new: true,
+		}
+	);
+	
+	return result;
 };
 
 export const getTaskById = async (id) => {
@@ -20,62 +61,3 @@ export const getTaskById = async (id) => {
 		throw new WrongParametersError(`Failed to update task with id ${id} not found.`);
 	}
 }
-
-export const addTask = async (body) => {
-	console.log("Body", body);
-	
-	const task = await Task.create({...body})
-	return task;
-};
-
-
-// try {
-// 	const result = await taskServices.createTask(userId, req.body);
-// 	res.status(200).json({
-// 		status: "success",
-// 		code: 200,
-// 		data: { task: result },
-// 	});
-// } catch (e) {
-// 	console.error(e);
-// 	next(e);
-// }
-
-export const updateTask = async (id, dataUpdate) => {
-	console.log("dataUpdate", dataUpdate)
-	if (!id || !dataUpdate) {
-		throw new WrongParametersError(`Failed to update task with id ${id} not found.`);
-	}
-	
-	const updatedTask = await Task.findByIdAndUpdate(id, dataUpdate, {
-		new: true,
-	});
-	console.log('updatedTask', updatedTask)
-	return updatedTask;
-};
-
-export const deleteTask = async (id) => {
-	console.log("id", id)
-	const deleteTask = await Task.findByIdAndDelete(id);
-	return deleteTask;
-	
-};
-
-export const updateStatusTask = async (taskId, status) => {
-	console.log("updateStatusTask", taskId, status)
-	const result = await Task.findOneAndUpdate(
-		// { _id: taskId, userId },
-		{_id: taskId},
-		{completed: status},
-		{
-			new: true,
-		}
-	);
-	console.log("RESULT", result);
-	return result;
-};
-
-// export const updateStatusContact = async (id, favorite) => {
-// 	const contactUpdateStatus = await Task.findOneAndUpdate(id, {favorite}, {new: true});
-// 	return contactUpdateStatus;
-// }
