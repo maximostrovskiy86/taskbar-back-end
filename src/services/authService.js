@@ -1,22 +1,23 @@
 import jwt from "jsonwebtoken";
-import {NotAuthorizedError} from "../helpers/error.js";
+import {NotAuthorizedError, ConflictError} from "../helpers/error.js";
 import bcrypt from "bcrypt";
 import User from "../db/userModel.js";
 
-
-export const registration = async ({name, email, password}) => {
-	// const user = new User({name, email, password});
-	// await user.save();
-	const user = await User.create({name, email, password});
-	// console.log("USER", user);
+export const registration = async ({email, password, name}) => {
+	const isUserExist = await User.findOne({email});
+	
+	if (isUserExist) {
+		throw new ConflictError(`Conflict, this email: ${email} already exist`)
+	}
+	
+	const newUser = await User.create({email, password, name});
+	
+	return {newUser, isUserExist};
 }
 
 
-
 export const login = async (email, password) => {
-	// console.log('LOGIN', email);
 	const user = await User.findOne({email});
-	console.log("USERLOGIN", user);
 	if (!user) {
 		throw new NotAuthorizedError(`No user with email ${email} found`)
 	}
@@ -25,10 +26,18 @@ export const login = async (email, password) => {
 		throw new NotAuthorizedError(`Wrong password`)
 	}
 	
-	const token = jwt.sign({
+	const payload = {
 		_id: user._id,
 		createdAt: user.createdAt,
-	}, process.env.JWT_SECRET)
+	};
 	
-	return token;
+	const token = jwt.sign(
+		payload,
+		process.env.JWT_SECRET,
+		{expiresIn: '12h'}
+	)
+	
+	return {token, user};
 }
+
+

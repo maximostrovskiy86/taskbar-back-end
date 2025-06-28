@@ -6,19 +6,16 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
 		name: {
 			type: String,
-			// required: [true, "Name is required"],
 			// required: true,
 		},
 		email: {
 			type: String,
-			// required: [true, "Email is required"],
 			required: true,
 			unique: true,
 		},
 		password: {
 			type: String,
 			required: true,
-			// required: [true, "Password is required"],
 		},
 		token: {
 			type: String,
@@ -33,8 +30,7 @@ const userSchema = new Schema({
 		//   required: [true, "Verify token is required"]
 		// }
 	},
-	// {typeKey: '$type'},
-	// {versionKey: false, timestamp: true}
+	{versionKey: false, timestamp: true}
 );
 
 userSchema.pre("save", async function () {

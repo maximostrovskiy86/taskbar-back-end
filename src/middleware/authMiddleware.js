@@ -4,7 +4,6 @@ import {NotAuthorizedError} from "../helpers/error.js";
 
 export const authMiddleware = (req, res, next) => {
 	const [tokenType, token] = req.headers.authorization.split(' ');
-	// console.log('tokenType', tokenType,  token);
 	
 	if (!token) {
 		console.log('tokenType', tokenType, token);

@@ -15,9 +15,18 @@ export class WrongParametersError extends ValidationError {
 
 export class NotAuthorizedError extends ValidationError {
 	constructor(message) {
-		console.log("validation error::: ", message)
+		console.log("NotAuthorizedError error::: ", message)
 		
 		super(message);
 		this.status = 401;
+	}
+}
+
+export class ConflictError extends ValidationError {
+	constructor(message) {
+		console.log(" ConflictError::: ", message)
+		
+		super(message);
+		this.status = 409;
 	}
 }

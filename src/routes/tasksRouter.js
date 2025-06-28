@@ -22,5 +22,4 @@ taskRouter.patch('/:id/status', updateStatusTaskController)
 taskRouter.delete('/:id', asyncWrapper(deleteTaskController))
 // taskRouter.get('/:id', asyncWrapper(findTaskByIdController))
 
-
 export default taskRouter;
