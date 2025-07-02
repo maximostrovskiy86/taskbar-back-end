@@ -18,7 +18,7 @@ const taskSchema = new Schema({
 		},
 		taskDate: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		category: {
 			type: String,
@@ -29,10 +29,14 @@ const taskSchema = new Schema({
 			type: Boolean,
 			default: false,
 		},
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: "users",
-		},
+		// owner: {
+		// 	type: Schema.Types.ObjectId,
+		// 	ref: "users",
+		// },
+		userId: {
+			type: String,
+			required: true,
+		}
 	},
 	{versionKey: false, timestamp: true}
 );
