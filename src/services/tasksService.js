@@ -2,14 +2,11 @@ import Task from "../db/taskModel.js";
 import {WrongParametersError} from "../helpers/error.js";
 
 export const getTasks = async (userId) => {
-	const tasks = await Task.find({userId});
-	return tasks;
+	return await Task.find({userId});
 };
 
-
 export const addTask = async (body, userId) => {
-	const task = await Task.create({...body, userId})
-	return task;
+	return await Task.create({...body, userId})
 };
 
 

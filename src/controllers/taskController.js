@@ -1,13 +1,9 @@
 import {addTask, getTasks, deleteTask, updateStatusTask, updateTask} from "../services/tasksService.js";
 
 export const getTasksController = async (req, res) => {
-	console.log("req.userId", req.user);
 	const {_id} = req.user;
 	
 	const tasks = await getTasks(_id);
-	
-	
-	console.log("reqQQ", req.user);
 	res.json({
 		status: 'success',
 		code: 200,
@@ -16,18 +12,22 @@ export const getTasksController = async (req, res) => {
 	});
 }
 
-export const addTaskController = async (req, res) => {
+export const addTaskController = async (req, res, next) => {
 	const {_id} = req.user;
 	
-	const result = await addTask(req.body, _id);
-	
-	
-	res.status(201).json({
-		status: "success",
-		code: 200,
-		task: result,
-		// data: {task: result},
-	});
+	try {
+		const result = await addTask(req.body, _id);
+		
+		res.status(201).json({
+			status: "success",
+			code: 200,
+			task: result,
+			// data: {task: result},
+		});
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
 }
 
 export const updateTaskController = async (req, res) => {
@@ -68,7 +68,7 @@ export const deleteTaskController = async (req, res) => {
 export const updateStatusTaskController = async (req, res, next) => {
 	const taskId = req.params.id;
 	const userId = req.user._id;
-	const status = req.body.completed;
+	const status = req.body.status;
 	// const userId = req.user.id;
 	console.log("req.body", req.body, status)
 	

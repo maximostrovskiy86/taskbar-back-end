@@ -1,9 +1,9 @@
 import {registration, login} from "../services/authService.js";
 
 export const registrationController = async (req, res, next) => {
-	const {name, email, password} = req.body;
+	const {userName, email, password} = req.body;
 	
-	const {isUserExist, newUser} = await registration({email, password, name});
+	const {isUserExist, newUser} = await registration({email, password, userName});
 	
 	if (isUserExist) {
 		return res.status(409).json({
@@ -44,6 +44,7 @@ export const loginController = async (req, res) => {
 	res.status(200).json({
 		status: "success",
 		code: 200,
-		accessToken: token
+		accessToken: token,
+		user
 	});
 }

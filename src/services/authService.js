@@ -3,15 +3,15 @@ import {NotAuthorizedError, ConflictError} from "../helpers/error.js";
 import bcrypt from "bcrypt";
 import User from "../db/userModel.js";
 
-export const registration = async ({email, password, name}) => {
+export const registration = async ({email, password, userName}) => {
 	const isUserExist = await User.findOne({email});
 	
 	if (isUserExist) {
 		throw new ConflictError(`Conflict, this email: ${email} already exist`)
 	}
 	
-	const newUser = await User.create({email, password, name});
-	
+	const newUser = await User.create({email, password, userName});
+	console.log("NEW", newUser)
 	return {newUser, isUserExist};
 }
 
