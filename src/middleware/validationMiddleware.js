@@ -5,13 +5,13 @@ export const addTaskValidationSchema = (req, res, next) => {
 	
 	const schema = Joi.object({
 		taskName: Joi.string()
-			.alphanum()
 			.min(1)
 			.max(30)
 			.required(),
 		difficulty: Joi.string().required(),
 		category: Joi.string().required(),
 		taskDate: Joi.string().required(),
+		isChallenge: Joi.boolean().required(),
 	});
 	
 	const validationResult = schema.validate(req.body);

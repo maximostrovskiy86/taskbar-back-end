@@ -20,6 +20,5 @@ taskRouter.post('/', addTaskValidationSchema, asyncWrapper(addTaskController))
 taskRouter.put('/:id', addTaskValidationSchema, asyncWrapper(updateTaskController))
 taskRouter.patch('/:id/status', updateStatusTaskController)
 taskRouter.delete('/:id', asyncWrapper(deleteTaskController))
-// taskRouter.get('/:id', asyncWrapper(findTaskByIdController))
 
 export default taskRouter;
