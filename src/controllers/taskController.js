@@ -8,7 +8,6 @@ export const getTasksController = async (req, res) => {
 		status: 'success',
 		code: 200,
 		tasks: tasks,
-		// data: tasks,
 	});
 }
 
@@ -22,7 +21,6 @@ export const addTaskController = async (req, res, next) => {
 			status: "success",
 			code: 200,
 			task: result,
-			// data: {task: result},
 		});
 	} catch (error) {
 		console.log(error);
@@ -34,14 +32,12 @@ export const updateTaskController = async (req, res) => {
 	const postId = req.params.id;
 	const data = req.body;
 	const userId = req.user._id;
-	console.log("req.body", req.body, postId, userId);
 	
 	const task = await updateTask(postId, data, userId)
 	res.json({
 		status: 'success',
 		code: 201,
 		task: task,
-		// data: {contact: task},
 	});
 }
 
@@ -69,8 +65,6 @@ export const updateStatusTaskController = async (req, res, next) => {
 	const taskId = req.params.id;
 	const userId = req.user._id;
 	const status = req.body.status;
-	// const userId = req.user.id;
-	console.log("req.body", req.body, status)
 	
 	try {
 		const resultUpdateStatus = await updateStatusTask(taskId, userId, status);

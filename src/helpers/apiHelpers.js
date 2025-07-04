@@ -6,11 +6,9 @@ export const asyncWrapper = (controller) => {
 	};
 };
 
-export const errorHandler = (error, req, res, next) => {
+export const errorHandler = (error, req, res) => {
 	if (error instanceof ValidationError) {
-		console.log("ERRORRRRRRRRRRR", error);
 		return res.status(error.status).json({message: error.message});
-		// return res.status(error.status).json({message: JSON.stringify(error.message)});
 	}
 	
 	res.status(500).json({message: error.message});

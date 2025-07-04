@@ -11,7 +11,6 @@ export const registration = async ({email, password, userName}) => {
 	}
 	
 	const newUser = await User.create({email, password, userName});
-	console.log("NEW", newUser)
 	return {newUser, isUserExist};
 }
 
