@@ -4,8 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "./src/bin/server.js",
+    "start": "node  ./src/bin/server.js",
     "dev": "nodemon ./src/bin/server.js",
+    "build": "webpack --config webpack.config.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix"
   },
