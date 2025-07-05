@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "./src/bin/server.js",
-    "build": "npm run build",
+    "build": "webpack",
     "dev": "nodemon ./src/bin/server.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix"
@@ -24,7 +24,8 @@
     "mongoose": "^8.15.1",
     "morgan": "~1.9.1",
     "nanoid": "^5.1.5",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "webpack": "^5.99.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
