@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "main": "./src/bin/server.js",
   "scripts": {
-    "start": "./src/bin/server.js",
-    "build": "webpack --mode=development",
+    "start": "node ./src/bin/server.js",
     "dev": "nodemon ./src/bin/server.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix"
@@ -24,9 +24,7 @@
     "mongoose": "^8.15.1",
     "morgan": "~1.9.1",
     "nanoid": "^5.1.5",
-    "nodemon": "^3.1.10",
-    "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1"
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
