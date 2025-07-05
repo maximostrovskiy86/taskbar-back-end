@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "./src/bin/server.js",
+    "build": "npm run build",
     "dev": "nodemon ./src/bin/server.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix"
