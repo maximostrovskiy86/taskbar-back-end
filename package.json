@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./src/bin/server.js",
+    "start": "./src/bin/server.js",
     "dev": "nodemon ./src/bin/server.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix"
